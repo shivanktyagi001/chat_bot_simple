@@ -8,8 +8,17 @@ date_msg = ["what's the date","date","tell me date","today's date"]
 time_msg = ["what's the time","time","tell me time","today's time"]
 def get_location():
     respose = requests.get("http://ip-api.com/json/")
-    return respose.json().city
-   
+    obj = respose.json()
+    return obj.city
+def get_news():
+    url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=695e07af402f4b119f0703e9b19f4683"
+    respone = requests.get(url)
+    obj = respone.json()
+    articles = obj['articles']
+    for i in range(len(articles)):
+        print(articles[i]['title'])
+
+
 chat = True
 while chat:
     msg = input("Enter your message: ").lower()
@@ -29,6 +38,8 @@ while chat:
         print(eval(msg.split()[-1]))
     elif msg == "city":
         print(get_location())
+    elif msg == "news":
+        print(get_news())
     elif msg == "bye":
         chat = False
     else:
